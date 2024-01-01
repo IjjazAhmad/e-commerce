@@ -1,0 +1,14 @@
+
+@media (max-width:380px) {
+    .single {
+        .product-data {
+            text-align: center;
+            .star{
+                flex-direction: column !important;
+            }
+            .des{
+                text-align: justify;
+            }
+        }
+    }
+}

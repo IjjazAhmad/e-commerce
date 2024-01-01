@@ -1,0 +1,20 @@
+$danger: #E55472;
+@import './scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,500&display=swap');
+
+* {
+  transition: all 0.3s !important;
+  font-family: 'Poppins', sans-serif;
+}
+
+.heading-1 {
+  text-align: center;
+  margin: 80px 0 40px 0;
+  font-weight: 800;
+}
+.active{
+  background-color: $danger !important;
+}
+.from-w {
+  width: 35% !important;
+}
