@@ -1,45 +1,156 @@
-import { createContext, useReducer } from "react";
+import React, { createContext, useContext, useEffect, useReducer } from 'react'
+import { toast } from 'react-toastify';
+const CartContext = createContext()
 
-export const CartContext = createContext();
+const getLocalCartData = () => {
+    let localCartData = localStorage.getItem("EcomCart");
 
-const initailstate = {
-    cart: [],
-    totalitem: "",
-    total_amount: "",
-    shoping_fee: 5000,
+    if (!localCartData || JSON.parse(localCartData).length === 0) {
+        return [];
+    } else {
+        return JSON.parse(localCartData);
+    }
+};
 
-}
-
+const initialState = {
+    cart: getLocalCartData(),
+    total_amount: 0,
+    total_price: 0,
+    shippingfee: 50000,
+};
 const reducer = (state, action) => {
-    switch (action) {
+    switch (action.type) {
         case "ADD_TO_CART":
 
+            let { amount, product } = action.payload;
+
+
             let CartProduct;
+
             CartProduct = {
-                
+                id: product.id,
+                name: product.name,
+                image: product.image,
+                max: product.stock,
+                price: product.price,
+                amount
             }
 
             return {
-                cart: []
+                cart: [...state.cart, CartProduct],
+
             }
+        case "REMOVE_ITEM":
 
+            let updatedCart = state.cart.filter(
+                (curItem) => curItem.id != action.payload
+            );
+            return {
+                ...state,
+                cart: updatedCart,
+            };
+        case "CLEAR_CART":
+            return {
+                ...state,
+                cart: [],
+            };
+        case "SET_DECREMENT":
+            let updatedproduct = state.cart.map((curElem) => {
+                if (curElem.id === action.payload) {
+                    let decAmount = curElem.amount - 1;
 
+                    if (decAmount <= 1) {
+                        decAmount = 1;
+                    }
+
+                    return {
+                        ...curElem,
+                        amount: decAmount,
+                    };
+                } else {
+                    return curElem;
+                }
+            });
+            return { ...state, cart: updatedproduct };
+        case "SET_INCREMENT":
+            let updatedProducts = state.cart.map((curElem) => {
+                if (curElem.id === action.payload) {
+                    let incAmount = curElem.amount + 1;
+
+                    if (incAmount >= curElem.max) {
+                        incAmount = curElem.max;
+                    }
+
+                    return {
+                        ...curElem,
+                        amount: incAmount,
+                    };
+                } else {
+                    return curElem;
+                }
+            });
+            return { ...state, cart: updatedProducts };
+        case "CART_TOTAL_PRICE":
+            let total_price = state.cart.reduce((initialVal, curElem) => {
+                let { price, amount } = curElem;
+
+                initialVal = initialVal + price * amount;
+                return initialVal;
+            }, 0);
+            let total_amount = state.cart.reduce((initialVal, curElem) => {
+                let { amount } = curElem;
+                initialVal = initialVal + amount;
+                return initialVal;
+            }, 0);
+
+            return {
+                ...state,
+                total_price,
+                total_amount
+            };
 
         default:
             return state;
     }
 }
 
-export const CartContextProvider = ({ props }) => {
+export function CartContextProvider({ children }) {
 
-    const [state, dispatch] = useReducer(reducer, initailstate)
+    const [state, dispatch] = useReducer(reducer, initialState)
 
-    const addtocart = (product) => {
-        dispatch({ type: "ADD_TO_CART", payload: product })
+    const addtoCart = (amount, product) => {
+        dispatch({ type: "ADD_TO_CART", payload: { amount, product } });
+        toast.success(`${product.name}  Is Add In Cart`, { position: "bottom-left" })
+    };
 
-    }
+    const removeItem = (id) => {
+        dispatch({ type: "REMOVE_ITEM", payload: id });
+    };
+    const clearCart = () => {
+        dispatch({ type: "CLEAR_CART" });
+    };
+    const setDecrement = (id) => {
+        dispatch({ type: "SET_DECREMENT", payload: id });
+    };
 
-    return <CartContext.Provider value={{ ...state, addtocart }}>
-        {props.children}
-    </CartContext.Provider>
+    const setIncrement = (id) => {
+        dispatch({ type: "SET_INCREMENT", payload: id });
+    };
+    useEffect(() => {
+        dispatch({ type: "CART_TOTAL_PRICE" });
+        localStorage.setItem("EcomCart", JSON.stringify(state.cart));
+    }, [state.cart]);
+
+
+    return (
+        <>
+            <CartContext.Provider value={{ ...state, dispatch, removeItem, setIncrement, setDecrement, clearCart, addtoCart }}>
+                {children}
+            </CartContext.Provider>
+        </>
+    )
+}
+
+export const useCartContext = () => {
+    return useContext(CartContext)
 }

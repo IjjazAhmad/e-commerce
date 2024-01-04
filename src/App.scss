@@ -1,4 +1,4 @@
-$danger: #E55472;
+$danger: #be99ff;
 @import './scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,500&display=swap');
 
@@ -12,9 +12,46 @@ $danger: #E55472;
   margin: 80px 0 40px 0;
   font-weight: 800;
 }
-.active{
+
+.active {
   background-color: $danger !important;
 }
+
 .from-w {
   width: 35% !important;
+}
+
+.div {
+  position: relative;
+  display: inline-block;
+
+  .button__badge {
+    background-color: #fa3e3e;
+    border-radius: 15px;
+    color: white;
+
+    padding: 5px 9px;
+    font-size: 10px;
+
+    position: absolute;
+    /* Position the badge within the relatively positioned button */
+    top: 0;
+    right: 0;
+  }
+}
+.back-to-top {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  padding: 5px 13px;
+  background-color: $danger;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out; /* Optional transition for smoother appearance */
+  opacity: 1; /* Initially hidden */
+  box-shadow: $warning 0px 10px 20px -12px;
+  z-index: 111;
 }

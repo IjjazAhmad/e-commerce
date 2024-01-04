@@ -10,7 +10,7 @@
     }
 
     .carousel {
-        height: 62vh !important;
+        
         position: relative !important;
 
         .carousel-item {
@@ -37,12 +37,14 @@
     }
 
 }
+
 .teimeradd {
-    background-image: url('../Assets/images/hero/4.jpg');
-    background-position: right;
-    background-size: cover;
-    height: 60%;
-    border-radius: 10px;
+    .bg {
+        background-image: url('../Assets/images/hero/4.jpg');
+        background-position: right;
+        background-size: cover;
+        border-radius: 10px;
+    }
 
     .time-card {
         font-weight: bold !important;
@@ -77,6 +79,6 @@
 
 .bth-hover-two:hover {
     background-color: $danger !important;
-   
+
 
 }

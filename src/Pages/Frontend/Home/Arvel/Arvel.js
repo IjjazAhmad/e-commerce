@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 
 import { useProductContext } from '../../../Context/ProductContext'
 import { Link } from 'react-router-dom'
+import { useCartContext } from '../../../Context/CartContext'
 
 export default function Arvel() {
+    const { addtoCart } = useCartContext();
+    const [amount, setAmount] = useState(1)
 
     const [SingleDoc, setSingleDoc] = useState({})
 
@@ -21,8 +24,8 @@ export default function Arvel() {
             <div className="container">
                 <div className="row">
                     <div className="col-1 mx-auto">
-                        <div class="spinner-border my-5 " role="status">
-                            <span class="visually-hidden">Loading...</span>
+                        <div className="spinner-border my-5 " role="status">
+                            <span className="visually-hidden">Loading...</span>
                         </div>
                     </div>
                 </div>
@@ -30,22 +33,14 @@ export default function Arvel() {
         </>
     }
     const firstProductIndex = 0;
-    const lastProductIndex = firstProductIndex + 5;
+    const lastProductIndex = firstProductIndex + 6;
     const productsToRender = products.slice(firstProductIndex, lastProductIndex);
-    console.log(productsToRender);
 
     const firstProductIndex1 = 0;
     const lastProductIndex1 = firstProductIndex1 + 8;
     const product = products.slice(firstProductIndex1, lastProductIndex1);
-    console.log(productsToRender);
 
-    const FrametNumber = (price) => {
-        return Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        }).format(price / 100)
 
-    }
 
     return (
 
@@ -65,7 +60,7 @@ export default function Arvel() {
 
                             return (
 
-                                <div key={i} className="col-12 col-md-4 mb-3 col-lg-2 p-2 mx-3">
+                                <div key={i} className="col-12 col-md-4 mb-3 col-lg-2 p-2">
                                     <Link to={`/singleproduct/${doc.id}`} className='text-decoration-none'>
                                         <div className="card shadow-sm border-0 rounded">
                                             <div className="card-body p-0"><img src={doc.image} className="w-100 card-img-top" />
@@ -93,50 +88,48 @@ export default function Arvel() {
 
                             return (
                                 <div key={i} className="col-12 col-md-6 mb-3 col-lg-3">
-                                    <Link to={`/singleproduct/${doc.id}`} className='text-decoration-none'>
 
-                                        <div className="product-grid ">
 
-                                            <div className="product-image">
+                                    <div className="product-grid ">
 
-                                                <div className="image">
+                                        <div className="product-image">
 
-                                                    <img src={doc.image} className='img-fluid' />
+                                            <div className="image">
 
-                                                </div>
-
-                                                <span className="product-discount-label">{doc.company}</span>
-
-                                                <ul className="product-links">
-
-                                                    <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-eye'></i></Link></li>
-
-                                                    <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-shopping-bag'></i></Link></li>
-
-                                                    <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-heart'></i></Link></li>
-
-                                                </ul>
-
-                                                <a href="/" className="add-to-cart">Add to Cart</a>
+                                                <img src={doc.image} className='img-fluid' />
 
                                             </div>
 
-                                            <div className="product-content bg">
+                                            <span className="product-discount-label">{doc.company}</span>
 
-                                                <div className='d-flex pt-2'>
+                                            <ul className="product-links">
 
-                                                    <h3 className="title"><a href="#">{doc.name}</a></h3>
+                                                <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-eye'></i></Link></li>
 
-                                                    <div className="price">{FrametNumber(doc.price)}</div>
+                                                <li><Link onClick={() => addtoCart(amount,doc)}><i className='fa fa-shopping-bag'></i></Link></li>
 
+                                                <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-heart'></i></Link></li>
 
-                                                </div>
+                                            </ul>
+
+                                            <a className="add-to-cart" onClick={() => addtoCart(amount, doc)}>Add to Cart</a>
+
+                                        </div>
+
+                                        <div className="product-content bg">
+
+                                            <div className='d-flex pt-2'>
+
+                                                <h3 className="title"><a href="#">{doc.name}</a></h3>
+
+                                                <div className="price">${(doc.price)}</div>
+
 
                                             </div>
 
                                         </div>
 
-                                    </Link>
+                                    </div>
                                 </div>
                             )
                         })}

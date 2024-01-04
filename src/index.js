@@ -7,6 +7,9 @@ import { AppProvider } from './Pages/Context/ProductContext';
 import { FilterContextProvider } from './Pages/Context/Filterproduct';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './Pages/Context/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import { CartContextProvider } from './Pages/Context/CartContext';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,12 +18,14 @@ root.render(
       <AppProvider>
         <AuthContextProvider>
           <FilterContextProvider>
-            <App />
-            
+            <CartContextProvider>
+              <App />
+            </CartContextProvider>
           </FilterContextProvider>
         </AuthContextProvider>
       </AppProvider>
     </BrowserRouter>
+    <ToastContainer />
   </React.StrictMode>
 );
 

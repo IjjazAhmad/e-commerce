@@ -2,13 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function ListView({ products }) {
-    const FrametNumber = (price) => {
-        return Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        }).format(price / 100)
-
-    }
+   
     return (
         <>
             {products.map((doc, i) => {
@@ -24,7 +18,7 @@ export default function ListView({ products }) {
                             <h2>{doc.name}</h2>
                             <div className="d-flex star">
                                 <p className='text-warning me-3'> <i className="fa-solid fa-star"></i> <i className="fa-solid fa-star"></i> <i className="fa-solid fa-star"></i> <i className="fa-solid fa-star"></i> <i className="fa-solid fa-star-half-stroke"></i> </p>
-                                <p>{FrametNumber(doc.price)}</p>
+                                <p>${(doc.price)}</p>
                             </div>
                             <p>{doc.description.slice(0, 180)}..</p>
                             <button className='btn btn-dark bth-hover p-3 py-2 mb-5'>Add To Cart</button>

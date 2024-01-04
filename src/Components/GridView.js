@@ -1,22 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useCartContext } from '../Pages/Context/CartContext';
 
 
 export default function GridView({ products }) {
+    const { addtoCart } = useCartContext();
+    const [amount, setAmount] = useState(1)
 
-    const FrametNumber = (price) => {
-        return Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        }).format(price / 100)
 
-    }
     return (
         <>
             <div className='row'>
 
                 {products.map((doc, i) => {
-
+                    let product = doc
                     return <div key={i} className="col-12 col-md-6 mb-3 col-lg-4">
 
                         <div className="product-grid">
@@ -35,13 +32,13 @@ export default function GridView({ products }) {
 
                                     <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-eye'></i></Link></li>
 
-                                    <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-shopping-bag'></i></Link></li>
+                                    <li><a onClick={() => addtoCart(amount, product)}><i className='fa fa-shopping-bag'></i></a></li>
 
                                     <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-heart'></i></Link></li>
 
                                 </ul>
 
-                                <a href="/" className="add-to-cart">Add to Cart</a>
+                                <a className="add-to-cart" onClick={() => addtoCart(amount, product)}>Add to Cart</a>
 
                             </div>
 
@@ -51,7 +48,7 @@ export default function GridView({ products }) {
 
                                     <h3 className="title"><a href="#">{doc.name}</a></h3>
 
-                                    <div className="price">{FrametNumber(doc.price)}</div>
+                                    <div className="price">${(doc.price)}</div>
 
 
                                 </div>

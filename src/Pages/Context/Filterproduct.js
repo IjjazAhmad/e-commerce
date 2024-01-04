@@ -26,7 +26,6 @@ const reducer = (state, action) => {
             let pricearr = action.payload.map((curss) => curss.price)
 
             let totalprice = Math.max(...pricearr)
-            console.log("🚀 ~ file: Filterproduct.js:29 ~ reducer ~ totalprice:", totalprice)
 
 
             return {
@@ -82,7 +81,7 @@ const reducer = (state, action) => {
                 })
             } else {
                 tempfilterproduct = tempfilterproduct.filter((curelems) => {
-                    return curelems.price < price;
+                    return curelems.price <= price;
                 })
             }
 
@@ -137,14 +136,14 @@ const reducer = (state, action) => {
 };
 
 export const FilterContextProvider = ({ children }) => {
-    const { products } = useProductContext();
+    const { Product } = useProductContext();
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        dispatch({ type: 'LOAD_FILTER_PRODUCT', payload: products });
-
-    }, [products]);
+        dispatch({ type: 'LOAD_FILTER_PRODUCT', payload: Product });
+        
+    }, [Product]);
 
     const setGridView = () => {
         dispatch({ type: "SET_GRID_VIEW" })
@@ -169,7 +168,9 @@ export const FilterContextProvider = ({ children }) => {
     }, [state.filters]);
 
     useEffect(() => {
-        dispatch({ type: 'SORTING_PRODUCTS', payload: products });
+        dispatch({
+            type: 'SORTING_PRODUCTS', payload: Product
+        });
     }, [state.short_value]);
 
     const shorting = () => {

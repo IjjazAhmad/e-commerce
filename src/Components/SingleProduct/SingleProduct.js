@@ -1,69 +1,65 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useProductContext } from '../../Pages/Context/ProductContext'
 import TopBar from '../TopBar'
-import Myimg from '../Myimg'
-import { CartContext } from '../../Pages/Context/CartContext'
+import { useCartContext } from '../../Pages/Context/CartContext'
+import CartAmountToggle from '../CartAmountToggle'
 
 
-const API = "https://api.pujakaitem.com/api/products"
 
 export default function SingleProduct() {
-  // const { addtocart } = useContext(CartContext)
-  const { getSingleProducts, isSingleLoading, singleproduct } = useProductContext()
+  const { addtoCart } = useCartContext();
+  const { Product } = useProductContext()
   const [singleProductName, setSingleProductName] = useState("")
-  const [quantity, setquantity] = useState(1)
-
+  const [singleProduct, setSingleProduct] = useState({})
+  const [amount, setAmount] = useState(1)
   const { id } = useParams()
 
-  const {
-    id: aqibid,
-    name,
-    company,
-    description,
-    price,
-    reviews,
-    stock,
-    image,
-    colors
 
-  } = singleproduct;
+
+
+  const setDecrease = () => {
+    amount > 1 ? setAmount(amount - 1) : setAmount(1)
+  }
+  const setIncrease = () => {
+    amount < singleProduct.stock ? setAmount(amount + 1) : setAmount(singleProduct.stock)
+  }
+
+
+
   useEffect(() => {
-    if (name) {
-      let capitalizedName = name.replace(/\b\w/g, char => char.toUpperCase());
+    if (singleProduct.name) {
+      let capitalizedName = singleProduct.name.replace(/\b\w/g, char => char.toUpperCase());
       setSingleProductName(capitalizedName);
     } else {
       setSingleProductName("Loading..."); // Or a placeholder
     }
-  }, [name]);
+  }, [singleProduct.name]);
 
   useEffect(() => {
-    getSingleProducts(`${API}?id=${id}`)
-  }, [])
+    let singleProduct = Product.find((product) => {
+      return product.id === id
+    })
+    setSingleProduct(singleProduct)
+  }, [id])
 
-  const FrametNumber = (price) => {
-    return Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price / 100)
+  // const FrametNumber = (price) => {
+  //   // return Intl.NumberFormat('en-US', {
+  //   //   style: 'currency',
+  //   //   currency: 'USD',
+  //   // }).format(price / 1000)
 
-  }
+  // }
 
-
-  const add = () => {
-    const delet = quantity + 1;
-    setquantity(delet)
-  }
-  
 
   return (
     <>
-      <TopBar title={name} />
+      <TopBar title={singleProduct.name} />
       <div className='single'>
         <div className='container mt-5'>
           <div className='row'>
             <div className='col-12 col-md-8 col-lg-6'>
-              <Myimg imgs={image} />
+              <img src={singleProduct.image} className='img-fluid' alt={singleProduct.name} />
             </div>
             <div className='col-12 col-md-8 col-lg-6'>
               <div className='product-data'>
@@ -72,31 +68,28 @@ export default function SingleProduct() {
                 {/* <Star stars={stars} reviews={reviews} className="text-warning" /> */}
                 <div className="d-flex star">
                   <p className='text-warning me-3'> <i className="fa-solid fa-star"></i> <i className="fa-solid fa-star"></i> <i className="fa-solid fa-star"></i> <i className="fa-solid fa-star"></i> <i className="fa-solid fa-star-half-stroke"></i> </p>
-                  <p>({reviews}  Comstemer Reviews)</p>
+                  <p>({singleProduct.reviews}  Comstemer Reviews)</p>
                 </div>
-                <p> <span className='text-danger'>Deal of the day :</span> {FrametNumber(price)}</p>
-                <p>{description}</p>
-                <p>Avalilable : <span className='text-danger'>{stock > 0 ? "In Stock" : "Not Avalilable"}</span></p>
-                <p>id : <span className='text-danger'>{id}</span></p>
-                <p>Brands : <span className='text-danger'>{company}</span></p>
+                <p> <span className='text-danger'>Deal of the day :</span> ${singleProduct.price}</p>
+                <p>{singleProduct.description}</p>
+                <p>Avalilable : <span className='text-danger'>{singleProduct.stock > 0 ? "In Stock" : "Not Avalilable"}</span></p>
+                <p>id : <span className='text-danger'>{singleProduct.id}</span></p>
+                <p>Brands : <span className='text-danger'>{singleProduct.company}</span></p>
                 <hr style={{ width: "90%" }} />
-                {stock > 0
+                {singleProduct.stock > 0
                   ?
-                  <div className='d-flex'>
-                    <button className='btn btn-dark bth-hover p-2 mx-3' onClick={() => {
-                      quantity > 1 ? setquantity(quantity - 1) : setquantity(1)
-                    }}>-</button>
-                    <p className='mt-4 p-2'>{quantity}</p>
-                    <button className='btn btn-dark bth-hover p-2 mx-3' onClick={add}>+</button>
-
-                  </div>
+                  <CartAmountToggle
+                    amount={amount}
+                    setDecrease={setDecrease}
+                    setIncrease={setIncrease}
+                  />
                   : ""}
-                <Link className='btn btn-dark bth-hover mb-5 text-decoration-none text-white' to='/cart' >Add To Cart</Link>
+                <Link className='btn btn-dark bth-hover mb-5 text-decoration-none text-white' onClick={() => addtoCart(amount, singleProduct)} >Add To Cart</Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

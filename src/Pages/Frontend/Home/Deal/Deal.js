@@ -13,14 +13,17 @@ export default function Deal() {
                 <div className='container'>
                     <div className='row mt-5'>
                         <div className='col-12 col-md-6 col-lg-5'>
-                            <img src={img5} className="mx-auto" />
+                            <div className="div">
+
+                            <img src={img5} className="img-fluid mx-auto" />
+                            </div>
                         </div>
                         <div className='col-12 col-md-6 col-lg-7'>
                             <div className="p-3 text-dark">
                                 <h1>Apple Shopping Event</h1>
                                 <p>Hurry and get discounts on all Apple devices up to 20%</p>
                                 <Time />
-                                <button className="my-4 p-3 px-5 rounded-1 btn btn-danger">Shop Now</button>
+                                <button className="my-4 p-3 px-3 px-md-4 px-lg-5 rounded-1 btn btn-danger">Shop Now</button>
                             </div>
                         </div>
                     </div>

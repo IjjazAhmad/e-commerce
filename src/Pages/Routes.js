@@ -1,21 +1,29 @@
 import React, { useContext } from 'react'
 
 import Frontend from './Frontend'
+import Dashbord from './Dashbord'
 import Auth from './Auth'
+import BackToTopBtn from "../Components/BackToTopBtn";
 
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from '../Components/PrivateRoutes'
 import { AuthContext } from './Context/AuthContext'
 
 export default function Index() {
-    const { state } = useContext(AuthContext)
-    const {isAuthenticated} = state
-    console.log("🚀 ~ file: Routes.js:12 ~ Index ~ isAuthenticated:", isAuthenticated)
+    const { user } = useContext(AuthContext)
+    
+
     return (
         <>
+            <BackToTopBtn />
             <Routes>
-                <Route path='/*' element={<PrivateRoute Component={Frontend} />} />
-                <Route path='/auth/*' element={!isAuthenticated? <Auth/> : <Navigate to='/'/> } />
+                <Route path='/*' element={<Frontend />} />
+                {
+                    user.role === "admin" ?
+                        <Route path='dashbord/*' element={<PrivateRoute Component={Dashbord} />} />
+                        : <Route path='*' element={<h1>Page Not Found</h1>} />
+                }
+                <Route path='/auth/*' element={<Auth />} />
             </Routes>
         </>
     )

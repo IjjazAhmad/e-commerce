@@ -1,11 +1,10 @@
-import { type } from '@testing-library/user-event/dist/type';
-import axios from 'axios';
 
-import { createContext, useContext, useEffect, useReducer } from 'react'
+import { createContext, useContext, useEffect, useReducer, useState } from 'react'
+import { firestore } from '../../config/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 const AppContext = createContext();
 
-const API = "https://api.pujakaitem.com/api/products"
 
 const initailState = {
 
@@ -73,36 +72,9 @@ const reduser = (state, action) => {
                 isLoading: true,
 
             };
-        case "SET_SINGLE_LOADING":
-
-            return {
-
-                ...state,
-
-                isSingleLoading: true,
-
-            };
-        case "SET_SINGLE_PRODUCT":
-
-            return {
-
-                ...state,
-
-                isSingleLoading: false,
-
-                singleproduct: action.payload,
-
-            };
-        case "SET_SINGLE_ERROR":
-
-            return {
-
-                ...state,
-
-                isSingleLoading: false,
-
-                isErrer: true,
-            };
+       
+      
+      
 
         default:
             return state;
@@ -112,54 +84,35 @@ const reduser = (state, action) => {
 const AppProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(reduser, initailState)
+    const [Product, setproduct] = useState([])
+ 
     useEffect(() => {
-        getProducts(API);
+        fetchDoc()
     }, [])
-
-    const getProducts = async (API) => {
-
+    const fetchDoc = async () => {
         dispatch({ type: "SET_LOADING" })
-
-        try {
-
-            const respons = await axios.get(API);
-
-            const products = await respons.data;
-
+        try{
+            let products = []
+            const querySnapshot = await getDocs(collection(firestore, "Products"));
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                let data = doc.data()
+                products.push(data)
+            });
+            setproduct(products)
             dispatch({ type: "SET_API_DATA", payload: products });
-
-        } catch (error) {
-
+        }catch(err){
             dispatch({ type: "API_ERROR" })
-
         }
-
     }
+    
 
-    const getSingleProducts = async (url) => {
-
-        dispatch({ type: "SET_SINGLE_LOADING" })
-
-        try {
-
-            const respons = await axios.get(url);
-
-            const singleproduct = await respons.data;
-
-            dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleproduct });
-
-        } catch (error) {
-
-            dispatch({ type: "SET_SINGLE_ERROR" })
-
-        }
-
-    }
+    
 
 
     return (
 
-        <AppContext.Provider value={{ ...state, getSingleProducts }}>
+        <AppContext.Provider value={{ ...state, Product }}>
 
             {children}
 

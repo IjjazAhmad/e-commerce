@@ -1,0 +1,30 @@
+.section {
+    .card {
+        .delet {
+            position: absolute;
+            right: 30px;
+            top: 90px;
+        }
+        .edit {
+            position: absolute;
+            right: 30px;
+            top: 12px;
+        }
+
+        .icon {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            align-items: center;
+            display: flex;
+
+            i {
+                margin-left: 2px;
+                font-size: 15px;
+            }
+        }
+    }
+}

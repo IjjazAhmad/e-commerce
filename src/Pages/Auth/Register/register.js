@@ -10,7 +10,7 @@ import img from '../../../Assets/images/5180200.png'
 const initialState = { firstname: "", lastname: "", email: "", password: "", confirmpassword: "" }
 
 export default function Register() {
-  const navigate = useNavigate()
+  const navegate = useNavigate() 
   const { dispatch } = useContext(AuthContext)
 
 
@@ -25,36 +25,36 @@ export default function Register() {
   const handelSubmit = async () => {
     const { firstname, lastname, email, password, confirmpassword } = state
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     if (!firstname) {
-      return toast.error("Plz enter firstname", { position: "top-right" })
+      return toast.info("Please Enter Firstname", { position: "bottom-left" })
     }
     if (firstname.length < 3) {
-      return toast.error("firstname must be 3 character", { position: "top-left" })
+      return toast.info("Firstname Must Be 3 Characters", { position: "bottom-left" })
     }
     if (!lastname) {
-      return toast.error("Plz enter lastname", { position: "top-right" })
+      return toast.info("Please Enter lastname", { position: "bottom-left" })
     }
     if (lastname.length < 3) {
-      return toast.error("lastname must be 3 character", { position: "top-left" })
+      return toast.info("LastName Must Be 3 Characters", { position: "bottom-left" })
     }
     if (!email) {
-      return toast.error("Plz add email", { position: "top-right" })
+      return toast.info("Please Enter Email", { position: "bottom-left" })
     }
     if (!emailRegex.test(email)) {
-      return toast.error("Please enter a valid email address", { position: "top-left" });
+      return toast.info("Please Enter A Valid Email Address", { position: "bottom-left" });
     }
     if (!password) {
-      return toast.error("Plz enter password", { position: "top-right" })
+      return toast.info("Please Enter Password", { position: "bottom-left" })
     }
     if (password.length < 6) {
-      return toast.error("Password must be six character", { position: "top-left" })
+      return toast.info("Password Must Be Six Characters", { position: "bottom-left" })
     }
     if (!confirmpassword) {
-      return toast.error("Plz enter confirmpassword", { position: "top-right" })
+      return toast.info("Please Enter Confirm Password", { position: "bottom-left" })
     }
     if (confirmpassword != password) {
-      return toast.error("No password match", { position: "top-left" })
+      return toast.info("No Password Match", { position: "bottom-left" })
     }
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -62,34 +62,30 @@ export default function Register() {
         const user = userCredential.user;
         adduserFun(user)
 
-        toast.success("Create Account Success", { position: "bottom-left" })
-      
       })
       .catch((error) => {
         toast.error(" Something Went Wrong Please Try Again", { position: "bottom-left" })
-   
+
       });
 
 
   }
 
-  const adduserFun = async(user) =>{
-    const {uid, email, password} = user
-    console.log("🚀 ~ file: register.js:83 ~ adduserFun ~ user:", user)
-    const {firstname, lastname, confirmpassword} = state
-let userdata = {firstname, lastname ,confirmpassword, uid}
-
-
-userdata.dateCreated =serverTimestamp()
-    console.log("🚀 ~ file: register.js:87 ~ adduserFun ~ userdata:", userdata)
+  const adduserFun = async (user) => {
+    const { uid, email, password } = user
+    const { firstname, lastname, confirmpassword } = state
+    const userData= { firstname, lastname, confirmpassword,email,uid }
+    userData.dateCreated= serverTimestamp();
+    userData.role = "user"
+    userData.status = "active"
     try {
-      await setDoc(doc(firestore, "Users", uid), {userdata})
-     
+      await setDoc(doc(firestore, "Users", uid), userData)
+      dispatch({ type: "LOGIN" ,payload: { user: userData }  })
       toast.success("Add User Successfully", { position: "bottom-left" })
-      dispatch({ type: "LOGIN" })
-    } catch (e) {
+      navegate("/")
+    } catch (err) {
       toast.error(" Something Went Wrong Please Try Again", { position: "bottom-left" })
-     
+
     }
   }
   return (

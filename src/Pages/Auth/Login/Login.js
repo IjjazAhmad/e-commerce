@@ -9,7 +9,7 @@ const initialState = { email: "", password: "", }
 
 export default function Login() {
   const { dispatch } = useContext(AuthContext)
-  const navigate = useNavigate()
+  const navegate = useNavigate()
   const [state, setstate] = useState(initialState)
 
   const handelChange = e => {
@@ -19,32 +19,30 @@ export default function Login() {
   }
   const handelSubmit = () => {
     const { email, password } = state
-   if(!email){
-     return toast.error("Plz add email", { position: "top-right" })
-   }
-   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      return toast.info("Please Enter Email", { position: "bottom-left" })
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        return toast.error("Please enter a valid email address", { position: "top-left" });
+      return toast.info("Please Enter A Valid Email Address", { position: "bottom-left" });
     }
-    if(!password){
-      return toast.error("Plz enter password", { position: "top-right" })
+    if (!password) {
+      return toast.info("Please Enter Password", { position: "bottom-left" })
     }
-   if(password.length<6){
-      return toast.error("Password must be six character", { position: "top-left" })
-   }
+    if (password.length < 6) {
+      return toast.info("Password Must Be Six Characters", { position: "bottom-left" })
+    }
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
-       
-        dispatch({ type: "LOGIN" })
-        // navigate("/")
+
+        navegate("/")
         toast.success("Login successfully", { position: "bottom-left" })
         // ...
       })
       .catch((error) => {
-       
+
         toast.error("Something Went Wrong Please Try Again", { position: "bottom-left" })
       });
 
@@ -72,7 +70,7 @@ export default function Login() {
                   <div className="row my-3">
                     <div className="col">
                       <label >Password</label>
-                      <input type="password" className="border-danger form-control shadow-none" value={state.password} name='password' onChange={handelChange}  required placeholder="Password" />
+                      <input type="password" className="border-danger form-control shadow-none" value={state.password} name='password' onChange={handelChange} required placeholder="Password" />
                     </div>
                   </div>
                   <div className="row my-3  mb-5 text-center">
