@@ -19,7 +19,7 @@ export default function index() {
         <Route path='/checkout' element={<Check />} />
         <Route path='/singleproduct/:id' element={<SingleProduct />} />
       </Routes>
-      <BottomBar/>
+      <BottomBar />
       <Footer />
     </>
   )

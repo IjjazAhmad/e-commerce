@@ -1,9 +1,14 @@
 .header {
-    height: 95px;
+    height: 150px;
 
     .hover:hover {
+        transition: all .6s;
         cursor: pointer;
         font-size: 15px !important;
         color: $danger !important;
+    }
+
+    .navbar-brand img{
+        width: 60%;
     }
 }

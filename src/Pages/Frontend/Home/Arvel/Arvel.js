@@ -106,7 +106,7 @@ export default function Arvel() {
 
                                                 <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-eye'></i></Link></li>
 
-                                                <li><Link onClick={() => addtoCart(amount, product)}><i className='fa fa-shopping-bag'></i></Link></li>
+                                                <li><Link onClick={() => addtoCart(amount, doc)}><i className='fa fa-shopping-bag'></i></Link></li>
 
                                                 <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-heart'></i></Link></li>
 
@@ -119,7 +119,7 @@ export default function Arvel() {
                                         <div className=" bg-danger">
                                             <div className='d-flex justify-content-around py-2'>
                                                 <p className='m-0'>${(doc.price)}</p>
-                                                <p onClick={() => addtoCart(amount, product)} className='text-end m-0'><i className='fa fa-shopping-bag '></i></p>
+                                                <p onClick={() => addtoCart(amount, doc)} className='text-end m-0'><i className='fa fa-shopping-bag '></i></p>
                                             </div>
 
                                         </div>

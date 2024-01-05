@@ -18,46 +18,95 @@ export default function Reviews() {
             <div className="container swiperContainer">
                 <div className="row">
                     <div className="col">
-                        {/* <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" space-between="30"
-                            slides-per-view="3">
-                            <swiper-slide>Slide 1</swiper-slide>
-                            <swiper-slide>Slide 2</swiper-slide>
-                            <swiper-slide>Slide 3</swiper-slide>
-                            <swiper-slide>Slide 4</swiper-slide>
-                            <swiper-slide>Slide 5</swiper-slide>
-                            <swiper-slide>Slide 6</swiper-slide>
-                            <swiper-slide>Slide 7</swiper-slide>
-                            <swiper-slide>Slide 8</swiper-slide>
-                            <swiper-slide>Slide 9</swiper-slide>
-                        </swiper-container> */}
                         <Swiper
+                            className='py-3'
                             // install Swiper modules
                             modules={[Navigation, Pagination, Scrollbar, A11y]}
                             spaceBetween={20}
-                            slidesPerView={3}
+                            breakpoints={{
+                                600: {
+                                    slidesPerView: 1,
+                                },
+                                768: {
+                                    slidesPerView: 2,
+                                },
+                                1024: {
+                                    slidesPerView: 3,
+                                },
+                            }}
                             navigation
                             pagination={{ clickable: true }}
-                            scrollbar={{ draggable: true }}
-                            onSwiper={(swiper) => console.log(swiper)}
-                            onSlideChange={() => console.log('slide change')}
                         >
-                            <SwiperSlide>Slide 1</SwiperSlide>
-                            <SwiperSlide>Slide 2</SwiperSlide>
-                            <SwiperSlide>Slide 3</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                            <SwiperSlide>Slide 5</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                            <SwiperSlide>Slide 6</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                            <SwiperSlide>Slide 7</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                            <SwiperSlide>Slide 8</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                            <SwiperSlide>Slide 4</SwiperSlide>
-                         
+                            <SwiperSlide>
+                                <div className="bg slide p-5 mx-2 text-center">
+                                    <div className="d-flex justify-content-center mb-2">
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                    </div>
+                                    <h4>Boy Name</h4>
+                                    <p>The efficacy of these products has not been confirmed by FSA or MHRA-approved research. These products are not intended to diagnose, treat, cure or prevent any disease.</p>
+                                </div>
+                            </SwiperSlide>
+
+                            <SwiperSlide>
+                                <div className="bg slide p-5 mx-2 text-center">
+                                    <div className="d-flex justify-content-center mb-2">
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                    </div>
+                                    <h4>Boy Name</h4>
+                                    <p>The efficacy of these products has not been confirmed by FSA or MHRA-approved research. These products are not intended to diagnose, treat, cure or prevent any disease.</p>
+                                </div>
+                            </SwiperSlide>
+
+                            <SwiperSlide>
+                                <div className="bg slide p-5 mx-2 text-center">
+                                    <div className="d-flex justify-content-center mb-2">
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                    </div>
+                                    <h4>Boy Name</h4>
+                                    <p>The efficacy of these products has not been confirmed by FSA or MHRA-approved research. These products are not intended to diagnose, treat, cure or prevent any disease.</p>
+                                </div>
+                            </SwiperSlide>
+
+                            <SwiperSlide>
+                                <div className="bg slide p-5 mx-2 text-center">
+                                    <div className="d-flex justify-content-center mb-2">
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                    </div>
+                                    <h4>Boy Name</h4>
+                                    <p>The efficacy of these products has not been confirmed by FSA or MHRA-approved research. These products are not intended to diagnose, treat, cure or prevent any disease.</p>
+                                </div>
+                            </SwiperSlide>
+
+                            <SwiperSlide>
+                                <div className="bg slide p-5 mx-2 text-center">
+                                    <div className="d-flex justify-content-center mb-2">
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                        <i className="fa-solid fa-star text-warning"></i>
+                                    </div>
+                                    <h4>Boy Name</h4>
+                                    <p>The efficacy of these products has not been confirmed by FSA or MHRA-approved research. These products are not intended to diagnose, treat, cure or prevent any disease.</p>
+                                </div>
+                            </SwiperSlide>
+
                         </Swiper>
                     </div>
                 </div>

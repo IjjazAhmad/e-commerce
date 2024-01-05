@@ -3,11 +3,22 @@
         display: block !important;
     }
 
+    .jazz {
+        width: 100px !important;
+        overflow: hidden;
+
+        .jazz-img {
+            width: 80px !important;
+        }
+      
+    }
+
 }
 
 @media (max-width:600px) {
     .footer {
         padding-bottom: 5rem !important;
+
         .show-none {
             display: none !important;
         }
