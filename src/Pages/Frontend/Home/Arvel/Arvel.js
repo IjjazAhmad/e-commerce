@@ -60,7 +60,7 @@ export default function Arvel() {
 
                             return (
 
-                                <div key={i} className="col-12 col-md-4 mb-3 col-lg-2 p-2">
+                                <div key={i} className="col-6 col-md-4 mb-3 col-lg-2 p-2">
                                     <Link to={`/singleproduct/${doc.id}`} className='text-decoration-none'>
                                         <div className="card shadow-sm border-0 rounded">
                                             <div className="card-body p-0"><img src={doc.image} className="w-100 card-img-top" />
@@ -87,10 +87,10 @@ export default function Arvel() {
                         {product.map((doc, i) => {
 
                             return (
-                                <div key={i} className="col-12 col-md-6 mb-3 col-lg-3">
+                                <div key={i} className="col-6 col-md-6 mb-3 col-lg-3">
 
 
-                                    <div className="product-grid ">
+                                    <div className="product-grid shadow">
 
                                         <div className="product-image">
 
@@ -106,25 +106,20 @@ export default function Arvel() {
 
                                                 <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-eye'></i></Link></li>
 
-                                                <li><Link onClick={() => addtoCart(amount,doc)}><i className='fa fa-shopping-bag'></i></Link></li>
+                                                <li><Link onClick={() => addtoCart(amount, product)}><i className='fa fa-shopping-bag'></i></Link></li>
 
                                                 <li><Link to={`/singleproduct/${doc.id}`}><i className='fa fa-heart'></i></Link></li>
 
                                             </ul>
 
-                                            <a className="add-to-cart" onClick={() => addtoCart(amount, doc)}>Add to Cart</a>
+
 
                                         </div>
 
-                                        <div className="product-content bg">
-
-                                            <div className='d-flex pt-2'>
-
-                                                <h3 className="title"><a href="#">{doc.name}</a></h3>
-
-                                                <div className="price">${(doc.price)}</div>
-
-
+                                        <div className=" bg-danger">
+                                            <div className='d-flex justify-content-around py-2'>
+                                                <p className='m-0'>${(doc.price)}</p>
+                                                <p onClick={() => addtoCart(amount, product)} className='text-end m-0'><i className='fa fa-shopping-bag '></i></p>
                                             </div>
 
                                         </div>

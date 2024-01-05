@@ -9,7 +9,7 @@ export default function Sidebar() {
                 {/* // < !--Main Navigation-- > */}
                 <header>
                     {/* <!-- Sidebar --> */}
-                    <nav id="sidebarMenu" className="collapse d-lg-block sidebar collapse bg-danger">
+                    <nav id="sidebarMenu" className="d-lg-block sidebar bg-danger">
                         <div className="position-sticky bg-danger">
                             <div className="list-group list-group-flush mx-3 mt-4 ">
                                 <Link

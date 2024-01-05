@@ -75,7 +75,7 @@ export default function Check() {
             await setDoc(doc(firestore, "orders", id), {
                 state, ordertotal, product
             })
-            toast.success("Payment Successfully", { position: "bottom-left" })
+            toast.success("Order Submit Successfully", { position: "bottom-left" })
         } catch (e) {
             toast.error(" Something Went Wrong Please Try Again", { position: "bottom-left" })
         }

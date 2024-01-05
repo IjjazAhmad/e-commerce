@@ -23,7 +23,7 @@ export default function Cart() {
         </div>
         <div className="row">
           <div className="table-responsive">
-            <table className="table">
+            <table className="table align-middle">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -39,12 +39,12 @@ export default function Cart() {
                   let price = curelem.price
                   return (
                     <tr key={i}>
-                      <th scope="row"><i className="mt-5 fa-solid fa-trash text-danger" onClick={() => removeItem(curelem.id)}></i></th>
+                      <th scope="row"><i className=" fa-solid fa-trash text-danger" onClick={() => removeItem(curelem.id)}></i></th>
                       <td className='w-25'><img src={curelem.image} className='cart-img' /></td>
                       <td>{curelem.name}</td>
                       <td>${(price)}</td>
                       <td> <CartAmountToggle
-                        amount={total_amount}
+                        amount={curelem.amount}
                         setDecrease={() => setDecrement(curelem.id)}
                         setIncrease={() => setIncrement(curelem.id)}
                       /> </td>

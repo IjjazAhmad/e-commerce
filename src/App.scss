@@ -55,3 +55,16 @@ $danger: #be99ff;
   box-shadow: $warning 0px 10px 20px -12px;
   z-index: 111;
 }
+
+
+.cart-img {
+  width: 20% !important;
+  height: 20% !important;
+}
+
+@media screen and (max-width: 600px) {
+  .cart-img {
+    width: 60% !important;
+    height: 20% !important;
+  }
+}

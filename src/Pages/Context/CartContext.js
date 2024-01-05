@@ -15,6 +15,7 @@ const getLocalCartData = () => {
 const initialState = {
     cart: getLocalCartData(),
     total_amount: 0,
+    amount: 0,
     total_price: 0,
     shippingfee: 50000,
 };
@@ -56,13 +57,11 @@ const reducer = (state, action) => {
             };
         case "SET_DECREMENT":
             let updatedproduct = state.cart.map((curElem) => {
-                if (curElem.id === action.payload) {
+                if (curElem && curElem.id === action.payload) {
                     let decAmount = curElem.amount - 1;
-
                     if (decAmount <= 1) {
                         decAmount = 1;
                     }
-
                     return {
                         ...curElem,
                         amount: decAmount,
@@ -120,7 +119,7 @@ export function CartContextProvider({ children }) {
 
     const addtoCart = (amount, product) => {
         dispatch({ type: "ADD_TO_CART", payload: { amount, product } });
-        toast.success(`${product.name}  Is Add In Cart`, { position: "bottom-left" })
+        toast.success(`Product Is SuccessFully Add In Cart`, { position: "bottom-left" })
     };
 
     const removeItem = (id) => {
